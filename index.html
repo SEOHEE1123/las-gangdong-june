@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6월 영크 강동팀 근무표</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 12px;
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", Arial, sans-serif;
+      background: #f3f6fb;
+      color: #1f2937;
+    }
+
+    .phone {
+      max-width: 430px;
+      margin: 0 auto;
+    }
+
+    .password-screen {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: #f3f6fb;
+    }
+
+    .password-card {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      border-radius: 22px;
+      padding: 26px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+    }
+
+    .password-card h1 {
+      margin: 0 0 10px;
+      color: #00429a;
+      font-size: 23px;
+    }
+
+    .password-card p {
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .password-card input {
+      width: 100%;
+      margin: 14px 0 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 11px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .password-card button {
+      width: 100%;
+      background: #00429a;
+      color: white;
+      border-radius: 12px;
+      padding: 12px;
+      font-weight: 900;
+    }
+
+    .top-card {
+      background: linear-gradient(135deg, #00429a, #0b63ce);
+      color: white;
+      padding: 16px;
+      border-radius: 18px;
+      box-shadow: 0 8px 20px rgba(0, 66, 154, 0.18);
+      margin-bottom: 10px;
+    }
+
+    .top-card h1 {
+      margin: 0 0 7px;
+      font-size: 20px;
+      line-height: 1.3;
+    }
+
+    .top-card p {
+      margin: 3px 0;
+      font-size: 12.5px;
+      opacity: .95;
+      line-height: 1.45;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: flex-end;
+      margin: 0 0 10px;
+    }
+
+    .refresh-btn {
+      background: #00429a;
+      color: white;
+      border-radius: 10px;
+      padding: 8px 11px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .week-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.07);
+      border: 1px solid #e5e7eb;
+      margin-bottom: 11px;
+      overflow: hidden;
+    }
+
+    .week-header {
+      width: 100%;
+      background: #fff;
+      padding: 12px 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+    }
+
+    .week-title {
+      font-size: 15px;
+      color: #00429a;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .week-status {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 3px;
+      margin-left: 8px;
+    }
+
+    .pill {
+      padding: 4px 7px;
+      border-radius: 999px;
+      font-size: 10.5px;
+      font-weight: 900;
+      background: #f1f5f9;
+      color: #475569;
+      white-space: nowrap;
+    }
+
+    .week-body {
+      padding: 0 10px 12px;
+    }
+
+    .section-toggle {
+      width: 100%;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      background: #f8fafc;
+      color: #00429a;
+      padding: 8px 10px;
+      margin: 8px 0 6px;
+      font-size: 12px;
+      font-weight: 950;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .mini-calendar {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 4px;
+      table-layout: fixed;
+    }
+
+    .mini-calendar th {
+      font-size: 11px;
+      color: #64748b;
+      padding: 4px 0;
+      font-weight: 900;
+    }
+
+    .mini-calendar th.sun,
+    .mini-calendar th.sat {
+      color: #be123c;
+    }
+
+    .day-cell {
+      vertical-align: top;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 5px 3px;
+      min-height: 85px;
+      height: auto;
+      overflow: hidden;
+    }
+
+    .day-cell.special {
+      background: #fff1f2;
+      border-color: #fecdd3;
+    }
+
+    .day-cell.mart-closed .date-line {
+      justify-content: center;
+    }
+
+    .day-cell.mart-closed .special-tag {
+      text-align: center;
+    }
+
+    .date-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2px;
+      margin-bottom: 3px;
+    }
+
+    .date-num {
+      font-size: 13px;
+      font-weight: 950;
+      color: #111827;
+    }
+
+    .special .date-num {
+      color: #be123c;
+    }
+
+    .count {
+      font-size: 9.5px;
+      font-weight: 900;
+      color: #00429a;
+      background: #e8f1ff;
+      border-radius: 999px;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    .special-tag {
+      display: block;
+      font-size: 8.8px;
+      line-height: 1.1;
+      color: #be123c;
+      font-weight: 950;
+      margin-bottom: 3px;
+      white-space: nowrap;
+    }
+
+    .names {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .name-chip {
+      display: block;
+      width: 100%;
+      border-radius: 6px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      padding: 2px 3px;
+      font-size: 8.5px;
+      font-weight: 900;
+      line-height: 1.15;
+      color: #334155;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .name-chip.locked {
+      color: #94a3b8;
+      background: #f1f5f9;
+    }
+
+    .check-wrap {
+      border: 1px solid #e5e7eb;
+      border-radius: 13px;
+      overflow: auto;
+      background: white;
+      max-width: 100%;
+    }
+
+    .check-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      min-width: 360px;
+    }
+
+    .check-table th,
+    .check-table td {
+      border-bottom: 1px solid #eef2f7;
+      border-right: 1px solid #eef2f7;
+      text-align: center;
+      padding: 6px 2px;
+    }
+
+    .check-table th:last-child,
+    .check-table td:last-child {
+      border-right: none;
+    }
+
+    .check-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .group-divider td {
+      height: 4px;
+      padding: 0 !important;
+      background: #00429a !important;
+      border: none !important;
+      line-height: 0;
+    }
+
+    .check-table th {
+      background: #f8fafc;
+      color: #475569;
+      font-size: 10.5px;
+      font-weight: 950;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    .check-table th.name-head,
+    .check-table td.name-cell {
+      width: 88px;
+      position: sticky;
+      left: 0;
+      z-index: 3;
+      background: white;
+      box-shadow: 1px 0 0 #e5e7eb;
+    }
+
+    .check-table th.name-head {
+      background: #f8fafc;
+      z-index: 4;
+    }
+
+    .date-head-small {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.1;
+      gap: 2px;
+    }
+
+    .date-head-small .num {
+      font-size: 12px;
+      font-weight: 950;
+      color: #111827;
+    }
+
+    .date-head-small .dow {
+      font-size: 9.5px;
+      font-weight: 900;
+      color: #64748b;
+    }
+
+    .date-head-small.special .num,
+    .date-head-small.special .dow,
+    .date-head-small.special .tag {
+      color: #be123c;
+    }
+
+    .date-head-small .tag {
+      font-size: 8px;
+      font-weight: 950;
+      color: #be123c;
+      white-space: nowrap;
+    }
+
+    .name-cell {
+      padding: 5px 3px !important;
+      text-align: center !important;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .member-name {
+      display: inline-block;
+      font-size: 12.5px;
+      font-weight: 950;
+      color: #1f2937;
+      line-height: 1.1;
+      vertical-align: middle;
+      max-width: 55px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .group-tag {
+      display: inline-block;
+      margin-left: 2px;
+      margin-top: 0;
+      font-size: 8px;
+      font-weight: 950;
+      color: #64748b;
+      background: #f1f5f9;
+      padding: 1px 3px;
+      border-radius: 999px;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .group-tag.leader {
+      color: #00429a;
+      background: #e8f1ff;
+    }
+
+    .locked-name .member-name {
+      color: #94a3b8;
+    }
+
+    input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      accent-color: #00429a;
+      margin: 0;
+    }
+
+    input[type="checkbox"]:disabled {
+      opacity: .45;
+    }
+
+    .mart-closed-col {
+      background: #fff1f2 !important;
+    }
+
+    .mart-closed-col input {
+      pointer-events: none;
+      opacity: .25;
+    }
+
+    .loading,
+    .error {
+      background: white;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 12px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+    }
+
+    .error {
+      color: #be123c;
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+    }
+
+    .hidden { display: none; }
+  </style>
+</head>
+
+<body>
+  <div id="passwordScreen" class="password-screen">
+    <div class="password-card">
+      <h1>6월 영크 강동팀 근무표</h1>
+      <p>비밀번호를 입력해 주세요.</p>
+      <input id="passwordInput" type="password" placeholder="비밀번호 입력" />
+      <button onclick="checkPassword()">입장하기</button>
+    </div>
+  </div>
+
+  <div id="app" class="phone hidden">
+    <div class="top-card">
+      <h1>6월 영크 강동팀 근무표</h1>
+      <p>- 기본 근무자 수 : 8명  (마트 휴무일 주간 : 9명)</p>
+      <p>- 각 주차에서 4일 선택 완료 시, 해당 주차는 자동 잠금 처리됩니다.</p>
+      <p>* 근무일 변경은 불가하오니, 신중하게 선택해주시기 바랍니다.</p>
+    </div>
+
+    <div class="toolbar">
+      <button class="refresh-btn" onclick="loadData()">새로고침</button>
+    </div>
+
+    <div id="errorBox"></div>
+    <div id="mainContent" class="loading">데이터를 불러오는 중입니다...</div>
+  </div>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbxAkLHaHYAEwSxUi8u2vJ4ARe8x5MXqttBViUVzv_8ooPVh_Nuf9-LbDr80DXkpzYdJ2Q/exec";
+    const LOCAL_PASSWORD = "0601";
+
+    let state = {
+      members: [],
+      calendar: [],
+      checks: [],
+      weekLocks: [],
+      settings: {},
+    };
+
+    function checkPassword() {
+      const input = document.getElementById("passwordInput").value.trim();
+
+      if (input !== LOCAL_PASSWORD) {
+        alert("비밀번호가 맞지 않습니다.");
+        return;
+      }
+
+      document.getElementById("passwordScreen").classList.add("hidden");
+      document.getElementById("app").classList.remove("hidden");
+      loadData();
+    }
+
+    document.getElementById("passwordInput").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") checkPassword();
+    });
+
+    async function loadData() {
+      clearError();
+
+      if (!API_URL || API_URL.includes("여기에_Apps_Script")) {
+        showError("Apps Script 웹 앱 URL을 먼저 입력해 주세요.");
+        document.getElementById("mainContent").innerHTML = "";
+        return;
+      }
+
+      document.getElementById("mainContent").className = "loading";
+      document.getElementById("mainContent").innerHTML = "데이터를 불러오는 중입니다...";
+
+      try {
+        const response = await fetch(`${API_URL}?action=getData`);
+        const data = await response.json();
+
+        if (!data.ok) {
+          throw new Error(data.message || "데이터를 불러오지 못했습니다.");
+        }
+
+        state = data;
+        normalizeState();
+        render();
+      } catch (error) {
+        showError("데이터 불러오기 실패: " + error.message);
+        document.getElementById("mainContent").innerHTML = "";
+      }
+    }
+
+    function normalizeState() {
+      state.members = (state.members || []).filter(member =>
+        String(member.active).toUpperCase() === "TRUE"
+      );
+
+      state.calendar = (state.calendar || []).map(day => ({
+        ...day,
+        dailyLimit: Number(day.dailyLimit || state.settings.defaultDailyLimit || 8),
+        martClosed: String(day.martClosed).toUpperCase() === "TRUE",
+      }));
+
+      state.checks = state.checks || [];
+      state.weekLocks = state.weekLocks || [];
+      state.settings = state.settings || {};
+    }
+
+    function render() {
+      const weeks = getWeeks();
+      let html = "";
+
+      weeks.forEach((week, index) => {
+        html += renderWeekCard(week, index);
+      });
+
+      document.getElementById("mainContent").className = "";
+      document.getElementById("mainContent").innerHTML = html;
+
+      attachCheckboxEvents();
+    }
+
+    function renderWeekCard(week, index) {
+      const isFirstWeek = index === 0;
+      const weekOpen = isFirstWeek;
+      const titlePrefix = weekOpen ? "▼" : "▶";
+      const weekTitle = `${titlePrefix} ${week.weekLabel} : ${formatRange(week.days)}`;
+      const martWeekText = week.days.some(day => day.martClosed) ? " 마트 휴무 주간" : "";
+      const weekBodyClass = weekOpen ? "week-body" : "week-body hidden";
+
+      return `
+        <section class="week-card">
+          <button class="week-header" onclick="toggleWeek('${week.weekKey}')">
+            <div>
+              <div class="week-title">${weekTitle}${martWeekText}</div>
+            </div>
+            <div class="week-status"><span class="pill">${weekOpen ? "펼침" : "접힘"}</span></div>
+          </button>
+
+          <div id="${week.weekKey}" class="${weekBodyClass}">
+            <button class="section-toggle" onclick="toggleWeek('status-${week.weekKey}')">
+              <span>날짜별 현황 보기</span>
+            </button>
+
+            <div id="status-${week.weekKey}" class="hidden">
+              ${renderStatusCalendar(week)}
+            </div>
+
+            ${renderCheckTable(week)}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderStatusCalendar(week) {
+      const days = week.days;
+
+      let html = `
+        <table class="mini-calendar">
+          <thead>
+            <tr>
+              <th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th class="sat">토</th><th class="sun">일</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+      `;
+
+      days.forEach(day => {
+        const special = isSpecialDay(day);
+        const names = getCheckedNamesByDate(day.date);
+        const count = names.length;
+        const cellClass = [
+          "day-cell",
+          special ? "special" : "",
+          day.martClosed ? "mart-closed" : "",
+        ].join(" ");
+
+        if (day.martClosed) {
+          html += `
+            <td class="${cellClass}">
+              <div class="date-line"><span class="date-num">${getDayNumber(day.date)}</span></div>
+              <span class="special-tag">마트 휴무</span>
+              <div class="names"></div>
+            </td>
+          `;
+        } else {
+          html += `
+            <td class="${cellClass}">
+              <div class="date-line">
+                <span class="date-num">${getDayNumber(day.date)}</span>
+                <span class="count">${count}/${day.dailyLimit}</span>
+              </div>
+              ${day.holidayName ? `<span class="special-tag">${day.holidayName}</span>` : ""}
+              <div class="names">
+                ${names.map(name => `<span class="name-chip ${isWeekLocked(name, day.weekKey) ? "locked" : ""}">${name}</span>`).join("")}
+              </div>
+            </td>
+          `;
+        }
+      });
+
+      html += `
+            </tr>
+          </tbody>
+        </table>
+      `;
+
+      return html;
+    }
+
+    function renderCheckTable(week) {
+      let html = `
+        <div class="check-wrap">
+          <table class="check-table">
+            <thead>
+              <tr>
+                <th class="name-head">이름</th>
+      `;
+
+      week.days.forEach(day => {
+        const special = isSpecialDay(day);
+        html += `
+          <th class="${day.martClosed ? "mart-closed-col" : ""}">
+            <div class="date-head-small ${special ? "special" : ""}">
+              <span class="num">${getDayNumber(day.date)}</span>
+              <span class="dow">${day.day}</span>
+              ${day.holidayName ? `<span class="tag">${day.holidayName.replace(" ", "")}</span>` : ""}
+            </div>
+          </th>
+        `;
+      });
+
+      html += `
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      let previousGroup = "";
+
+      state.members.forEach((member, index) => {
+        const currentGroup = member.group || "";
+
+        if (
+          index > 0 &&
+          currentGroup === "2기" &&
+          previousGroup !== "2기"
+        ) {
+          html += `<tr class="group-divider"><td colspan="${week.days.length + 1}"></td></tr>`;
+        }
+
+        previousGroup = currentGroup;
+
+        const memberLocked = isWeekLocked(member.name, week.weekKey);
+
+        html += `
+          <tr>
+            <td class="name-cell ${memberLocked ? "locked-name" : ""}">
+              <span class="member-name">${member.name}</span>
+              <span class="group-tag ${currentGroup === "팀장" ? "leader" : ""}">${currentGroup}</span>
+            </td>
+        `;
+
+        week.days.forEach(day => {
+          const checked = isChecked(member.name, day.date);
+          const dailyCount = getCheckedNamesByDate(day.date).length;
+          const dateFull = dailyCount >= day.dailyLimit && !checked;
+          const disabled = memberLocked || day.martClosed || dateFull;
+
+          html += `
+            <td class="${day.martClosed ? "mart-closed-col" : ""}">
+              <input
+                type="checkbox"
+                data-name="${escapeAttr(member.name)}"
+                data-date="${day.date}"
+                data-week-key="${day.weekKey}"
+                ${checked ? "checked" : ""}
+                ${disabled ? "disabled" : ""}
+              />
+            </td>
+          `;
+        });
+
+        html += `</tr>`;
+      });
+
+      html += `
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      return html;
+    }
+
+    function attachCheckboxEvents() {
+      document.querySelectorAll("input[type='checkbox'][data-name]").forEach(checkbox => {
+        checkbox.addEventListener("change", async function() {
+          await handleCheckChange(this);
+        });
+      });
+    }
+
+    async function handleCheckChange(checkbox) {
+      const name = checkbox.dataset.name;
+      const date = checkbox.dataset.date;
+      const weekKey = checkbox.dataset.weekKey;
+      const checked = checkbox.checked;
+
+      checkbox.disabled = true;
+      clearError();
+
+      try {
+        const result = await postData({
+          action: "saveCheck",
+          name,
+          date,
+          weekKey,
+          checked,
+        });
+
+        if (!result.ok) {
+          checkbox.checked = !checked;
+          alert(result.message || "저장할 수 없습니다.");
+        } else if (result.locked) {
+          alert("해당 주차 근무일 4개 선택이 완료되어 자동 잠금 처리되었습니다.");
+        }
+
+        await loadData();
+      } catch (error) {
+        checkbox.checked = !checked;
+        showError("저장 실패: " + error.message);
+        await loadData();
+      }
+    }
+
+    async function postData(payload) {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      return await response.json();
+    }
+
+    function getWeeks() {
+      const map = {};
+
+      state.calendar.forEach(day => {
+        if (!map[day.weekKey]) {
+          map[day.weekKey] = {
+            weekKey: day.weekKey,
+            weekLabel: day.weekLabel,
+            days: [],
+          };
+        }
+
+        map[day.weekKey].days.push(day);
+      });
+
+      return Object.values(map);
+    }
+
+    function getCheckedNamesByDate(date) {
+      return state.checks
+        .filter(check =>
+          check.date === date &&
+          String(check.checked).toUpperCase() === "TRUE"
+        )
+        .map(check => check.name);
+    }
+
+    function isChecked(name, date) {
+      return state.checks.some(check =>
+        check.name === name &&
+        check.date === date &&
+        String(check.checked).toUpperCase() === "TRUE"
+      );
+    }
+
+    function isWeekLocked(name, weekKey) {
+      return state.weekLocks.some(lock =>
+        lock.name === name &&
+        lock.weekKey === weekKey &&
+        String(lock.locked).toUpperCase() === "TRUE"
+      );
+    }
+
+    function isSpecialDay(day) {
+      return day.day === "토" || day.day === "일" || day.holidayName || day.martClosed;
+    }
+
+    function getDayNumber(dateString) {
+      return Number(String(dateString).split("-")[2]);
+    }
+
+    function formatRange(days) {
+      if (!days || days.length === 0) return "";
+
+      const first = days[0];
+      const last = days[days.length - 1];
+
+      return `${formatShortDate(first.date)}(${first.day})~${formatShortDate(last.date)}(${last.day})`;
+    }
+
+    function formatShortDate(dateString) {
+      const parts = String(dateString).split("-");
+      return `${Number(parts[1])}/${Number(parts[2])}`;
+    }
+
+    function toggleWeek(id) {
+      const element = document.getElementById(id);
+      if (!element) return;
+      element.classList.toggle("hidden");
+    }
+
+    function escapeAttr(value) {
+      return String(value).replace(/"/g, "&quot;");
+    }
+
+    function showError(message) {
+      document.getElementById("errorBox").innerHTML = `<div class="error">${message}</div>`;
+    }
+
+    function clearError() {
+      document.getElementById("errorBox").innerHTML = "";
+    }
+  </script>
+</body>
+</html>
