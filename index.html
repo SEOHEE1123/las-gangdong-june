@@ -21,61 +21,10 @@
       margin: 0 auto;
     }
 
-    .password-screen {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      background: #f3f6fb;
-    }
-
-    .password-card {
-      width: 100%;
-      max-width: 420px;
-      background: white;
-      border-radius: 22px;
-      padding: 26px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
-    }
-
-    .password-card h1 {
-      margin: 0 0 10px;
-      color: #00429a;
-      font-size: 23px;
-    }
-
-    .password-card p {
-      color: #64748b;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .password-card input {
-      width: 100%;
-      margin: 14px 0 10px;
-      border: 1px solid #cbd5e1;
-      border-radius: 12px;
-      padding: 11px;
-      text-align: center;
-      font-size: 18px;
-      font-weight: 900;
-    }
-
     button {
       border: none;
       cursor: pointer;
       font-family: inherit;
-    }
-
-    .password-card button {
-      width: 100%;
-      background: #00429a;
-      color: white;
-      border-radius: 12px;
-      padding: 12px;
-      font-weight: 900;
     }
 
     .top-card {
@@ -470,16 +419,7 @@
 </head>
 
 <body>
-  <div id="passwordScreen" class="password-screen">
-    <div class="password-card">
-      <h1>6월 영크 강동팀 근무표</h1>
-      <p>비밀번호를 입력해 주세요.</p>
-      <input id="passwordInput" type="password" placeholder="비밀번호 입력" />
-      <button onclick="checkPassword()">입장하기</button>
-    </div>
-  </div>
-
-  <div id="app" class="phone hidden">
+  <div id="app" class="phone">
     <div class="top-card">
       <h1>6월 영크 강동팀 근무표</h1>
       <p>- 기본 근무자 수 : 8명  (마트 휴무일 주간 : 9명)</p>
@@ -496,8 +436,7 @@
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbxAkLHaHYAEwSxUi8u2vJ4ARe8x5MXqttBViUVzv_8ooPVh_Nuf9-LbDr80DXkpzYdJ2Q/exec";
-    const LOCAL_PASSWORD = "0601";
+    const API_URL = "여기에_Apps_Script_웹앱_URL_붙여넣기";
 
     let state = {
       members: [],
@@ -507,22 +446,7 @@
       settings: {},
     };
 
-    function checkPassword() {
-      const input = document.getElementById("passwordInput").value.trim();
-
-      if (input !== LOCAL_PASSWORD) {
-        alert("비밀번호가 맞지 않습니다.");
-        return;
-      }
-
-      document.getElementById("passwordScreen").classList.add("hidden");
-      document.getElementById("app").classList.remove("hidden");
-      loadData();
-    }
-
-    document.getElementById("passwordInput").addEventListener("keydown", function(event) {
-      if (event.key === "Enter") checkPassword();
-    });
+    window.addEventListener("DOMContentLoaded", loadData);
 
     async function loadData() {
       clearError();
