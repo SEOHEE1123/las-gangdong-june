@@ -31,7 +31,7 @@
       background: linear-gradient(135deg, #00429a, #0b63ce);
       color: white;
       padding: 16px;
-      border-radius: 18px;
+      -radius: 18px;
       box-shadow: 0 8px 20px rgba(0, 66, 154, 0.18);
       margin-bottom: 12px;
     }
@@ -51,9 +51,9 @@
 
     .week-card {
       background: white;
-      border-radius: 16px;
+      -radius: 16px;
       box-shadow: 0 4px 14px rgba(15, 23, 42, 0.07);
-      border: 1px solid #e5e7eb;
+      : 1px solid #e5e7eb;
       margin-bottom: 11px;
       overflow: hidden;
     }
@@ -85,7 +85,7 @@
 
     .pill {
       padding: 4px 7px;
-      border-radius: 999px;
+      -radius: 999px;
       font-size: 10.5px;
       font-weight: 900;
       background: #f1f5f9;
@@ -99,8 +99,8 @@
 
     .section-toggle {
       width: 100%;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
+      : 1px solid #e5e7eb;
+      -radius: 12px;
       background: #f8fafc;
       color: #00429a;
       padding: 8px 10px;
@@ -114,8 +114,8 @@
 
     .mini-calendar {
       width: 100%;
-      border-collapse: separate;
-      border-spacing: 4px;
+      -collapse: separate;
+      -spacing: 4px;
       table-layout: fixed;
     }
 
@@ -134,8 +134,8 @@
     .day-cell {
       vertical-align: top;
       background: #f8fafc;
-      border: 1px solid #e5e7eb;
-      border-radius: 10px;
+      : 1px solid #e5e7eb;
+      -radius: 10px;
       padding: 5px 3px;
       min-height: 85px;
       height: auto;
@@ -144,7 +144,7 @@
 
     .day-cell.special {
       background: #fff1f2;
-      border-color: #fecdd3;
+      -color: #fecdd3;
     }
 
     .day-cell.mart-closed .date-line {
@@ -178,7 +178,7 @@
       font-weight: 900;
       color: #00429a;
       background: #e8f1ff;
-      border-radius: 999px;
+      -radius: 999px;
       padding: 2px 4px;
       white-space: nowrap;
     }
@@ -202,9 +202,9 @@
     .name-chip {
       display: block;
       width: 100%;
-      border-radius: 6px;
+      -radius: 6px;
       background: #fff;
-      border: 1px solid #e5e7eb;
+      : 1px solid #e5e7eb;
       padding: 2px 3px;
       font-size: 8.5px;
       font-weight: 900;
@@ -221,8 +221,8 @@
     }
 
     .check-wrap {
-      border: 1px solid #e5e7eb;
-      border-radius: 13px;
+      : 1px solid #e5e7eb;
+      -radius: 13px;
       overflow: auto;
       background: white;
       max-width: 100%;
@@ -230,33 +230,33 @@
 
     .check-table {
       width: 100%;
-      border-collapse: collapse;
+      -collapse: collapse;
       table-layout: fixed;
       min-width: 360px;
     }
 
     .check-table th,
     .check-table td {
-      border-bottom: 1px solid #eef2f7;
-      border-right: 1px solid #eef2f7;
+      -bottom: 1px solid #eef2f7;
+      -right: 1px solid #eef2f7;
       text-align: center;
       padding: 6px 2px;
     }
 
     .check-table th:last-child,
     .check-table td:last-child {
-      border-right: none;
+      -right: none;
     }
 
     .check-table tr:last-child td {
-      border-bottom: none;
+      -bottom: none;
     }
 
     .group-divider td {
       height: 4px;
       padding: 0 !important;
       background: #00429a !important;
-      border: none !important;
+      : none !important;
       line-height: 0;
     }
 
@@ -610,13 +610,13 @@
       state.members.forEach((member, index) => {
         const currentGroup = member.group || "";
 
-        if (
-          index > 0 &&
-          currentGroup === "2기" &&
-          previousGroup !== "2기"
-        ) {
-          html += `<tr class="group-divider"><td colspan="${week.days.length + 1}"></td></tr>`;
-        }
+       if (
+  index > 0 &&
+  (currentGroup === "2기" || currentGroup === "3기") &&
+  currentGroup !== previousGroup
+) {
+  html += `<tr class="group-divider"><td colspan="${week.days.length + 1}"></td></tr>`;
+}
 
         previousGroup = currentGroup;
 
